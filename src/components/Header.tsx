@@ -13,6 +13,8 @@ const Header = () => {
         onClick={handleThemeChange}
         src={lightDarkMode}
         alt="light-dark mode"
+        width={50}
+        height={50}
       />
     </div>
   );

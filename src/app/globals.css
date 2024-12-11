@@ -1,11 +1,13 @@
 :root {
   --bg-color: #f4f6ff;
   --text-color: #000000;
+  --btn-color: #8eb486;
 }
 
 [data-theme="dark"] {
   --bg-color: #2c2d30;
   --text-color: #ffffff;
+  --btn-color: #8eb486;
 }
 
 body {
@@ -21,5 +23,16 @@ input {
 }
 
 form {
+  border: 1px solid var(--text-color);
+}
+
+textarea {
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+}
+
+button {
+  color: var(--text-color);
+  background-color: var(--btn-color);
   border: 1px solid var(--text-color);
 }
