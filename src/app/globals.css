@@ -2,12 +2,14 @@
   --bg-color: #f4f6ff;
   --text-color: #000000;
   --btn-color: #8eb486;
+  --box-bg: #d1d1d1;
 }
 
 [data-theme="dark"] {
   --bg-color: #2c2d30;
   --text-color: #ffffff;
   --btn-color: #8eb486;
+  --box-bg: #rgba(69, 69, 69, 0.5);
 }
 
 body {
@@ -35,4 +37,8 @@ button {
   color: var(--text-color);
   background-color: var(--btn-color);
   border: 1px solid var(--text-color);
+}
+
+.box-bg {
+  background-color: var(--box-bg);
 }
