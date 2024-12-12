@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
 import StoreContext from "./StoreContext";
+import { DiaryListTypes } from "./types";
 
 interface StoreProviderProps {
   children: ReactNode;
@@ -8,6 +9,7 @@ interface StoreProviderProps {
 
 const StoreProvider = ({ children }: StoreProviderProps) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [diary, setDiary] = useState<DiaryListTypes[]>([]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -19,8 +21,15 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   };
 
   const providerValue = {
+    // State
     theme,
+    diary,
+
+    // Setter Function
     setTheme,
+    setDiary,
+
+    // Functions
     handleThemeChange,
   };
 
