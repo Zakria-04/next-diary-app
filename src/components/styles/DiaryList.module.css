@@ -23,3 +23,15 @@
   border-radius: 0.3rem;
   text-align: center;
 }
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.listHeader input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 1rem;
+}

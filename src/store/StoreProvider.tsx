@@ -8,7 +8,7 @@ interface StoreProviderProps {
 }
 
 const StoreProvider = ({ children }: StoreProviderProps) => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [diary, setDiary] = useState<DiaryListTypes[]>([]);
 
   useEffect(() => {
