@@ -1,21 +1,21 @@
 "use client";
 import React from "react";
-import lightDarkMode from "../assets/images/day-and-night.png";
-import Image from "next/image";
 import useStore from "@/utils/store_provider";
+import styles from "./styles/Header.module.css";
 
 const Header = () => {
   const { theme, handleThemeChange } = useStore();
 
   return (
-    <div>
-      <Image
-        onClick={handleThemeChange}
-        src={lightDarkMode}
-        alt="light-dark mode"
-        width={50}
-        height={50}
-      />
+    <div className={styles.header}>
+      <label className={styles.switch}>
+        <input
+          type="checkbox"
+          onChange={handleThemeChange}
+          checked={theme === "dark"}
+        />
+        <span className={styles.slider}></span>
+      </label>
     </div>
   );
 };
