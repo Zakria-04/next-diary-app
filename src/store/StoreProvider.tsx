@@ -10,6 +10,7 @@ interface StoreProviderProps {
 const StoreProvider = ({ children }: StoreProviderProps) => {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [diary, setDiary] = useState<DiaryListTypes[]>([]);
+  const [isLive, setIsLive] = useState<boolean>(false);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -24,10 +25,12 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     // State
     theme,
     diary,
+    isLive,
 
     // Setter Function
     setTheme,
     setDiary,
+    setIsLive,
 
     // Functions
     handleThemeChange,

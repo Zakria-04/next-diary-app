@@ -1,12 +1,9 @@
-import { redirect } from 'next/navigation'
-import React from 'react'
+import Splash from "@/components/Splash";
+import { redirect } from "next/navigation";
+import React from "react";
 
 const page = () => {
-  const isLive = true
-  isLive && redirect("/login")
-  return (
-    <div>page</div>
-  )
-}
+  return <Splash />;
+};
 
-export default page
+export default page;
