@@ -8,10 +8,20 @@ const isLive = () => {
   return appFetch(route, "GET");
 };
 
+const loginUserFromDB = (body: UserInfo) => {
+  const route = "/login_user";
+  return appFetch(route, "POST", body);
+};
+
+const createUserToDB = (body: UserInfo) => {
+  const route = "/create_user";
+  return appFetch(route, "POST", body);
+};
+
 const appFetch = async (
   route: string,
   method: "GET" | "POST" | "PATCH",
-  body?: any
+  body?: UserInfo
 ) => {
   try {
     const response = await axios({
@@ -21,9 +31,12 @@ const appFetch = async (
     });
 
     return await response.data;
-  } catch (error) {
-    errorMessage(error);
+  } catch (error: any) {
+    const serverError =
+      error.response?.data || "An unexpected error occurred";
+    console.error(`Error on fetching the route, ${route}: ${serverError}`);
+    throw new Error(JSON.stringify(serverError));
   }
 };
 
-export { isLive };
+export { isLive, loginUserFromDB, createUserToDB };

@@ -7,16 +7,23 @@ export type DiaryListTypes = {
   timeStamp: string;
 };
 
+export type UserInfoType = {
+  userName: string;
+  email: string;
+};
+
 export interface StoreContextType {
   // State
   theme: "light" | "dark";
   diary: DiaryListTypes[];
   isLive: boolean;
+  user: UserInfoType | null;
 
   // Setter function
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
   setDiary: React.Dispatch<SetStateAction<DiaryListTypes[]>>;
   setIsLive: React.Dispatch<SetStateAction<boolean>>;
+  setUser: React.Dispatch<SetStateAction<UserInfoType | null>>;
 
   // Functions
   handleThemeChange: () => void;
