@@ -10,8 +10,8 @@ interface LoginRegisterProps {
 }
 
 const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
-  const { user, setUser } = useStore();
-  const [inputsError, setInputsError] = useState({});
+  const { setUser } = useStore();
+  const [inputsError, setInputsError] = useState<any>({});
 
   const inputsRef = useRef({
     userName: "",
@@ -43,18 +43,35 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
 
   // render texts based on status => "login or register"
   const buttonText = status === "login" ? "Login" : "Create New Account";
-  const toggleText = status === "login" ? "not a member?" : "already a member?";
+  const toggleText =
+    status === "login" ? "not a member yet?" : "already a member?";
   const toggleLinkText = status === "login" ? "register" : "login";
   const toggleLinkHref = status === "login" ? "/register" : "/login";
   const userNameText = status === "login" ? "User Name" : "User Name or Email";
+
+  // input error messages
+  const notUserError = inputsError.type === "notUser" ? styles.inputError : "";
+  const wrongPass = inputsError.type === "password" ? styles.inputError : "";
+
+  console.log(inputsError);
 
   return (
     <form id={styles.formContainer} onSubmit={handleFormSubmit}>
       <label htmlFor="userName">{userNameText}</label>
       <input
+        className={`${notUserError}`}
         type="text"
         onChange={(e) => handleInputsChange("userName", e.target.value)}
+        onInput={() => setInputsError({})}
+        required
       />
+      {status === "login" ? (
+        <p className={styles.errorText}>
+          {inputsError.type === "notUser" && inputsError.error}
+        </p>
+      ) : (
+        <p></p>
+      )}
 
       {status === "register" && (
         <>
@@ -62,19 +79,36 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
           <input
             type="text"
             onChange={(e) => handleInputsChange("email", e.target.value)}
+            onInput={() => setInputsError({})}
           />
+          <p></p>
         </>
       )}
 
       <label htmlFor="password">Password</label>
       <input
+        className={`${wrongPass || notUserError}`}
         type="password"
         onChange={(e) => handleInputsChange("userPass", e.target.value)}
+        onInput={() => setInputsError({})}
+        required
       />
+      {status === "login" ? (
+        <p className={styles.errorText}>
+          {inputsError.type === "password" || inputsError.type === "notUser"
+            ? inputsError.error
+            : ""}
+        </p>
+      ) : (
+        <p></p>
+      )}
 
       <button>{buttonText}</button>
-      <p>
-        {toggleText} <a href={toggleLinkHref}>{toggleLinkText}</a>
+      <p id={styles.linkText}>
+        {toggleText}{" "}
+        <a href={toggleLinkHref} onClick={() => setInputsError({})}>
+          {toggleLinkText}
+        </a>
       </p>
     </form>
   );

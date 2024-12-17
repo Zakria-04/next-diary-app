@@ -19,13 +19,23 @@
 
 #formContainer button {
   padding: 0.8rem;
-  margin-top: 3rem;
+  font-size: 1rem;
 }
 
-#formContainer p {
+#formContainer #linkText {
   text-align: center;
 }
 
 #formContainer p a {
   color: #6b7eb3;
+}
+
+.inputError {
+  color: rgb(171, 78, 78);
+  border: 1px solid rgb(171, 78, 78);
+}
+
+.errorText {
+  font-size: 14px;
+  color: rgb(171, 78, 78);
 }
