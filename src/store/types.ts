@@ -18,12 +18,14 @@ export interface StoreContextType {
   diary: DiaryListTypes[];
   isLive: boolean;
   user: UserInfoType | null;
+  error: string | null;
 
   // Setter function
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
   setDiary: React.Dispatch<SetStateAction<DiaryListTypes[]>>;
   setIsLive: React.Dispatch<SetStateAction<boolean>>;
   setUser: React.Dispatch<SetStateAction<UserInfoType | null>>;
+  setError: React.Dispatch<SetStateAction<string | null>>;
 
   // Functions
   handleThemeChange: () => void;

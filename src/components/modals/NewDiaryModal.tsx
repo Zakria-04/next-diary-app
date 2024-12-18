@@ -2,6 +2,8 @@ import React, { SetStateAction, useRef, useState } from "react";
 import styles from "./styles/NewDiaryModal.module.css";
 import { DiaryListTypes } from "@/store/types";
 import useStore from "@/utils/store_provider";
+import { createDiaryToDB } from "@/res/api";
+import ErrorMessageModal from "./ErrorMessageModal";
 
 interface NewDiaryModalProps {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -14,7 +16,7 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
   direction,
   selectedItem,
 }) => {
-  const { diary, setDiary } = useStore();
+  const { diary, setDiary, setError } = useStore();
 
   const getDate = new Date();
   const day = getDate.getDate();
@@ -37,12 +39,26 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
     }));
   };
 
-  const handleDiarySubmitBtn = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleDiarySubmitBtn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const updateDiaryList = [inputs, ...diary];
     setDiary(updateDiaryList);
     setIsOpen(false);
+
+    // add the new generated diary to the db
+    try {
+      setError(null);
+      const response = await createDiaryToDB(inputs);
+      console.log("new diary list has been created!");
+      return response;
+    } catch (error: unknown) {
+      const errMessage =
+        error instanceof Error
+          ? JSON.parse(error.message)
+          : "An unknown error occurred";
+      setError(errMessage.error);
+    }
   };
 
   const handleUpdatedInputs = (e: React.FormEvent<HTMLFormElement>) => {

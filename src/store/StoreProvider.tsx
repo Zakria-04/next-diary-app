@@ -12,7 +12,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   const [diary, setDiary] = useState<DiaryListTypes[]>([]);
   const [isLive, setIsLive] = useState<boolean>(false);
   const [user, setUser] = useState<UserInfoType | null>(null);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -23,18 +23,22 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     setTheme(mode);
   };
 
+  
+
   const providerValue = {
     // State
     theme,
     diary,
     isLive,
     user,
+    error,
 
     // Setter Function
     setTheme,
     setDiary,
     setIsLive,
     setUser,
+    setError,
 
     // Functions
     handleThemeChange,

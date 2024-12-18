@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 import styles from "./styles/LoginRegister.module.css";
 import { loginUserFromDB } from "@/res/api";
 import useStore from "@/utils/store_provider";
-import { errorMessage } from "@/utils/errorMessage";
 
 interface LoginRegisterProps {
   status: "login" | "register";
@@ -52,8 +51,6 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
   // input error messages
   const notUserError = inputsError.type === "notUser" ? styles.inputError : "";
   const wrongPass = inputsError.type === "password" ? styles.inputError : "";
-
-  console.log(inputsError);
 
   return (
     <form id={styles.formContainer} onSubmit={handleFormSubmit}>
