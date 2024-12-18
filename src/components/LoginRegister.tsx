@@ -1,16 +1,26 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles/LoginRegister.module.css";
 import { loginUserFromDB } from "@/res/api";
 import useStore from "@/utils/store_provider";
+import { redirect } from "next/navigation";
 
 interface LoginRegisterProps {
   status: "login" | "register";
 }
 
 const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
-  const { setUser } = useStore();
+  const { setUser, auth, setAuth, user } = useStore();
   const [inputsError, setInputsError] = useState<any>({});
+
+  useEffect(() => {
+    if (user === null) {
+      setAuth(false);
+    }
+    if (auth && user !== null) {
+      redirect("/home");
+    }
+  }, [auth, user]);
 
   const inputsRef = useRef({
     userName: "",
@@ -31,8 +41,9 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
     try {
       const response = await loginUserFromDB(inputsRef.current);
       if (response) {
-        console.log("user logged in sucsusfully", response);
+        console.log("user logged in sucsusfully!");
         setUser(response.user);
+        setAuth(true);
       }
     } catch (error: any) {
       const errorMessage = JSON.parse(error.message);

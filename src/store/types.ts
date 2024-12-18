@@ -21,6 +21,7 @@ export interface StoreContextType {
   isLive: boolean;
   user: UserInfoType | null;
   error: string | null;
+  auth: boolean;
 
   // Setter function
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
@@ -28,6 +29,7 @@ export interface StoreContextType {
   setIsLive: React.Dispatch<SetStateAction<boolean>>;
   setUser: React.Dispatch<SetStateAction<UserInfoType | null>>;
   setError: React.Dispatch<SetStateAction<string | null>>;
+  setAuth: React.Dispatch<SetStateAction<boolean>>;
 
   // Functions
   handleThemeChange: () => void;
