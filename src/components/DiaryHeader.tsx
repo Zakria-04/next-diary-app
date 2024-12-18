@@ -5,6 +5,7 @@ import styles from "./styles/DiaryHeader.module.css";
 import Image from "next/image";
 import bin from "../assets/images/bin.png";
 import useStore from "@/utils/store_provider";
+import { deleteDiaryFromDB } from "@/res/api";
 
 interface DiaryHeaderProps {
   listSimulator: Array<string>;
@@ -15,10 +16,10 @@ const DiaryHeader: React.FC<DiaryHeaderProps> = ({
   listSimulator,
   setListSimulator,
 }) => {
-  const { diary, setDiary } = useStore();
+  const { diary, setDiary, setError, user } = useStore();
   const [isOpen, setIsOpen] = useState(false);
 
-  const deleteSelectedItems = () => {
+  const deleteSelectedItems = async () => {
     for (let i = 0; i < listSimulator.length; i++) {
       const getIndexOfList = diary.findIndex(
         (id) => id._id === listSimulator[i]
@@ -29,6 +30,19 @@ const DiaryHeader: React.FC<DiaryHeaderProps> = ({
         list.splice(getIndexOfList, 1);
         setDiary(list);
       }
+    }
+    try {
+      const response = await deleteDiaryFromDB({
+        diaryIDs: listSimulator,
+        authID: user?._id,
+      });
+      return response;
+    } catch (error) {
+      const errMessage =
+        error instanceof Error
+          ? JSON.parse(error.message)
+          : "An unknown error occurred";
+      setError(errMessage.error);
     }
     setListSimulator([]);
   };
@@ -54,6 +68,3 @@ const DiaryHeader: React.FC<DiaryHeaderProps> = ({
 };
 
 export default DiaryHeader;
-
-
-

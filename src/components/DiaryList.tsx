@@ -15,7 +15,7 @@ const DiaryList: React.FC<DiaryListProps> = ({
   listSimulator,
   setListSimulator,
 }) => {
-  const { setDiary } = useStore();
+  const { setDiary, } = useStore();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<null | DiaryListTypes>(null);
 
@@ -33,14 +33,13 @@ const DiaryList: React.FC<DiaryListProps> = ({
         return [...prevList, id];
       }
     });
-    console.log(listSimulator);
   };
 
   return (
     <div className={`${styles.container}`}>
-      {diary.map((list, index) => (
+      {diary.map((list) => (
         <div
-          key={index}
+          key={list._id}
           className={`${styles.listContainer} box-border box-bg`}
         >
           <div className={styles.listHeader}>

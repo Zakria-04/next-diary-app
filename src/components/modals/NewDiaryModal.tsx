@@ -18,13 +18,6 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
 }) => {
   const { diary, setDiary, setError, user } = useStore();
 
-  // const getDate = new Date();
-  // const day = getDate.getDate();
-  // const month = getDate.getMonth() + 1;
-  // const year = getDate.getFullYear();
-
-  // const fullDate = `${day},${month},${year}`;
-
   const [inputs, setInputs] = useState<DiaryListTypes>({
     _id: selectedItem?._id || "",
     authID: user?._id || "67600408208d7881b85b4523",
