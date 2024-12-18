@@ -1,7 +1,6 @@
 import { DiaryListTypes } from "@/store/types";
 import React, { SetStateAction, useState } from "react";
 import styles from "./styles/DiaryList.module.css";
-import ModifyModal from "./modals/ModifyModal";
 import NewDiaryModal from "./modals/NewDiaryModal";
 import useStore from "@/utils/store_provider";
 

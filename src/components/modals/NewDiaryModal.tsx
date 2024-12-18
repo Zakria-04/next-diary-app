@@ -16,20 +16,20 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
   direction,
   selectedItem,
 }) => {
-  const { diary, setDiary, setError } = useStore();
+  const { diary, setDiary, setError, user } = useStore();
 
-  const getDate = new Date();
-  const day = getDate.getDate();
-  const month = getDate.getMonth() + 1;
-  const year = getDate.getFullYear();
+  // const getDate = new Date();
+  // const day = getDate.getDate();
+  // const month = getDate.getMonth() + 1;
+  // const year = getDate.getFullYear();
 
-  const fullDate = `${day},${month},${year}`;
+  // const fullDate = `${day},${month},${year}`;
 
   const [inputs, setInputs] = useState<DiaryListTypes>({
-    _id: selectedItem?._id || "6",
+    _id: selectedItem?._id || "",
+    authID: user?._id || "67600408208d7881b85b4523",
     title: selectedItem?.title || "",
     context: selectedItem?.context || "",
-    timeStamp: fullDate,
   });
 
   const handleInputsChange = (key: string, value: string) => {
@@ -42,16 +42,13 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
   const handleDiarySubmitBtn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const updateDiaryList = [inputs, ...diary];
-    setDiary(updateDiaryList);
-    setIsOpen(false);
-
     // add the new generated diary to the db
     try {
       setError(null);
       const response = await createDiaryToDB(inputs);
-      console.log("new diary list has been created!");
-      return response;
+      const updateDiaryList = [response.diary, ...diary];
+      setDiary(updateDiaryList);
+      setIsOpen(false);
     } catch (error: unknown) {
       const errMessage =
         error instanceof Error

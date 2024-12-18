@@ -2,12 +2,14 @@ import React, { SetStateAction } from "react";
 
 export type DiaryListTypes = {
   _id: string;
+  authID: string;
   title: string;
   context: string;
-  timeStamp: string;
+  timeStamp?: string;
 };
 
 export type UserInfoType = {
+  _id: string;
   userName: string;
   email: string;
 };
