@@ -47,7 +47,9 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
         error instanceof Error
           ? JSON.parse(error.message)
           : "An unknown error occurred";
-      setError(errMessage.error);
+      setError(errMessage.errorMsg);
+      console.log("err from errMsg",error);
+      
     }
   };
 
@@ -82,12 +84,14 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
             value={inputs.title}
             type="text"
             onChange={(e) => handleInputsChange("title", e.target.value)}
+            required
           />
         </div>
         <label>My Story:</label>
         <textarea
           value={inputs.context}
           onChange={(e) => handleInputsChange("context", e.target.value)}
+          required
         ></textarea>
         <div className={styles.btnControls}>
           <button onClick={() => setIsOpen(false)}>Cancel</button>

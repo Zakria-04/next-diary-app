@@ -3,6 +3,7 @@ import React, { SetStateAction, useState } from "react";
 import styles from "./styles/DiaryList.module.css";
 import NewDiaryModal from "./modals/NewDiaryModal";
 import useStore from "@/utils/store_provider";
+import EmptyList from "./EmptyList";
 
 interface DiaryListProps {
   diary: DiaryListTypes[];
@@ -15,9 +16,13 @@ const DiaryList: React.FC<DiaryListProps> = ({
   listSimulator,
   setListSimulator,
 }) => {
-  const { setDiary, } = useStore();
+  const { setDiary } = useStore();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<null | DiaryListTypes>(null);
+
+  if (diary.length === 0) {
+    return <EmptyList />;
+  }
 
   const handleModifyClick = (item: DiaryListTypes) => {
     setIsOpen(!isOpen);

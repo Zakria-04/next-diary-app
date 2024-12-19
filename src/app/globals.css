@@ -98,3 +98,7 @@ a {
 a:hover {
   color: var(--btn-hover-color);
 }
+
+.text-color {
+  color: var(--text-color);
+}

@@ -42,6 +42,7 @@
   padding: 0.8rem;
   margin-bottom: 1rem;
   background-color: #f9f9f9;
+  color: #222;
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   outline: none;
@@ -58,6 +59,7 @@
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   background-color: #f9f9f9;
+  color: #222;
   font-size: 1rem;
   padding: 0.8rem;
   outline: none;

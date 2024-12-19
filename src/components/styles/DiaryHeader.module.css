@@ -27,6 +27,10 @@
   border: none;
 }
 
+.binBtn:hover {
+  background: none;
+}
+
 .binBtn:disabled {
   cursor: not-allowed;
 }

@@ -34,4 +34,5 @@ export interface StoreContextType {
   // Functions
   handleThemeChange: () => void;
   getUserDiary: () => void;
+  logoutUser: () => void;
 }

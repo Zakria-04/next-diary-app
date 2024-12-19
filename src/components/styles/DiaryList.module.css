@@ -78,3 +78,9 @@
   background-color: var(--btn-color);
   border-color: var(--btn-color);
 }
+
+@media (min-width: 1150px) {
+  .container {
+    padding: 1.5rem  10rem;
+  }
+}

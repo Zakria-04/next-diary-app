@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles/LoginRegister.module.css";
-import { loginUserFromDB } from "@/res/api";
+import { createUserToDB, loginUserFromDB } from "@/res/api";
 import useStore from "@/utils/store_provider";
 import { redirect } from "next/navigation";
 
@@ -14,6 +14,7 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
   const [inputsError, setInputsError] = useState<{
     type?: string;
     error?: string;
+    errorMsg?: string;
   }>({});
 
   useEffect(() => {
@@ -42,7 +43,8 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
     e.preventDefault();
 
     try {
-      const response = await loginUserFromDB(inputsRef.current);
+      const apiFunction = status === "login" ? loginUserFromDB : createUserToDB;
+      const response = await apiFunction(inputsRef.current);
       if (response) {
         console.log("user logged in sucsusfully!");
         setUser(response.user);
@@ -114,9 +116,8 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
             : ""}
         </p>
       ) : (
-        <p></p>
+        <p className={styles.errorText}>{inputsError.errorMsg}</p>
       )}
-
       <button>{buttonText}</button>
       <p id={styles.linkText}>
         {toggleText}{" "}

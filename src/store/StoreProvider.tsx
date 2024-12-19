@@ -2,7 +2,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import StoreContext from "./StoreContext";
 import { DiaryListTypes, UserInfoType } from "./types";
-import { getUserDiaryFromDB } from "@/res/api";
+import { getUserDiaryFromDB, loginUserFromDB } from "@/res/api";
 
 interface StoreProviderProps {
   children: ReactNode;
@@ -59,6 +59,13 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     }
   };
 
+  // logout user
+  const logoutUser = () => {
+    setAuth(false);
+    setDiary([]);
+    setUser(null);
+  };
+
   const providerValue = {
     // State
     theme,
@@ -79,6 +86,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     // Functions
     handleThemeChange,
     getUserDiary,
+    logoutUser,
   };
 
   return (

@@ -1,0 +1,33 @@
+.container h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.container p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  background-color: #28a745; /* Green button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #218838;
+}
+
+.emptyText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
