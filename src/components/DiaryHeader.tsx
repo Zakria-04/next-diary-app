@@ -1,5 +1,5 @@
 "use client";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useMemo, useState } from "react";
 import NewDiaryModal from "./modals/NewDiaryModal";
 import styles from "./styles/DiaryHeader.module.css";
 import Image from "next/image";
@@ -18,25 +18,21 @@ const DiaryHeader: React.FC<DiaryHeaderProps> = ({
 }) => {
   const { diary, setDiary, setError, user } = useStore();
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
+
+  const binVisible = useMemo(() => listSimulator.length > 0, [listSimulator]);
 
   const deleteSelectedItems = async () => {
-    for (let i = 0; i < listSimulator.length; i++) {
-      const getIndexOfList = diary.findIndex(
-        (id) => id._id === listSimulator[i]
-      );
-
-      if (getIndexOfList !== -1) {
-        let list = diary;
-        list.splice(getIndexOfList, 1);
-        setDiary(list);
-      }
-    }
+    setIsDeleteClicked(true);
+    const filterDiaryList = diary.filter(
+      (li) => !listSimulator.includes(li._id)
+    );
+    setDiary(filterDiaryList);
     try {
-      const response = await deleteDiaryFromDB({
+      await deleteDiaryFromDB({
         diaryIDs: listSimulator,
         authID: user?._id,
       });
-      return response;
     } catch (error) {
       const errMessage =
         error instanceof Error
@@ -45,20 +41,24 @@ const DiaryHeader: React.FC<DiaryHeaderProps> = ({
       setError(errMessage.error);
     }
     setListSimulator([]);
+    setIsDeleteClicked(false);
   };
 
   return (
     <div className={styles.container}>
-      <Image
-        className={
-          listSimulator.length > 0 ? styles.binVisible : styles.binHidden
-        }
-        src={bin}
-        alt="delete"
-        width={35}
-        height={35}
+      <button
+        className={styles.binBtn}
         onClick={deleteSelectedItems}
-      />
+        disabled={listSimulator.length === 0 ? true : isDeleteClicked}
+      >
+        <Image
+          className={binVisible ? styles.binVisible : styles.binHidden}
+          src={bin}
+          alt="delete"
+          width={35}
+          height={35}
+        />
+      </button>
       <button className={styles.newDiaryBtn} onClick={() => setIsOpen(!isOpen)}>
         Share New Story
       </button>

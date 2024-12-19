@@ -4,8 +4,8 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.29);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -15,72 +15,100 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  border-width: 2px;
-  box-shadow: 5px 10px 15px #00000096;
-  gap: 10px;
-  width: 20rem;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  width: 22rem;
   z-index: 1;
-  transition: 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .container:hover {
-  box-shadow: 10px 15px 10px #000;
-  transition: 0.3s;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
 }
 
 .container label {
-  font-size: 1.5rem;
-  margin-right: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 0.5rem;
 }
 
 .container input {
-  padding: 1rem;
+  padding: 0.8rem;
   margin-bottom: 1rem;
-  background-color: transparent;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
   border-radius: 0.5rem;
   outline: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.container input:focus {
+  border-color: #4caf50;
 }
 
 .container textarea {
   height: 8rem;
-  border-radius: 1rem;
-  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9;
   font-size: 1rem;
-  padding: 1rem;
+  padding: 0.8rem;
   outline: none;
   margin-top: 0.5rem;
-  font-size: 1.2rem;
+  transition: border-color 0.2s;
+}
+
+.container textarea:focus {
+  border-color: #4caf50;
 }
 
 .titleInputContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .titleInputContainer input {
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .btnControls {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1rem;
+  margin-top: 1rem;
 }
 
 .btnControls button {
-  padding: 0.8rem;
-  width: 5rem;
-  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  width: 6rem;
   border-radius: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #4caf50;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnControls button:hover {
+  background-color: #45a049;
 }
 
 .headerTitle {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 1rem;
 }

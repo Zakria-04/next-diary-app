@@ -1,33 +1,61 @@
 .container {
-  background-color: rgb(231, 231, 231);
+  background-color: var(--box-bg);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 0.8rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   width: 23rem;
-  height: 15rem;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
 }
 
 #modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 #modalHeader p {
-  color: #641515;
-  font-size: 1.2rem;
+  color: var(--btn-color);
+  font-size: 1.4rem;
+  font-weight: bold;
   text-decoration: underline;
+  margin: 0;
 }
 
 .errMessage {
-  color: #000;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 90%;
   margin: auto;
   line-height: 1.6;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  background-color: var(--input-bg);
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--input-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.errMessage span {
+  font-weight: bold;
+  color: #d9534f; /* Error-specific color */
+}
+
+/* Modal animation for better UX */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }

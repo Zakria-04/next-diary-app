@@ -1,48 +1,100 @@
 :root {
   --bg-color: #f4f6ff;
-  --text-color: #000000;
-  --btn-color: #8eb486;
-  --box-bg: #d1d1d1;
+  --text-color: #333333;
+  --btn-color: #4caf50;
+  --btn-hover-color: #45a049;
+  --box-bg: #ffffff;
+  --input-bg: #f9f9f9;
+  --input-border: #cccccc;
+  --placeholder-color: #7a7a7a;
 }
 
 [data-theme="dark"] {
   --bg-color: #2c2d30;
   --text-color: #ffffff;
-  --btn-color: #8eb486;
-  --box-bg: #rgba(69, 69, 69, 0.5);
+  --btn-color: #4caf50;
+  --btn-hover-color: #3d8c41;
+  --box-bg: #3a3b3e;
+  --input-bg: #2f3033;
+  --input-border: #555555;
+  --placeholder-color: #aaaaaa;
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  line-height: 1.6;
 }
 
-input {
-  border: 1px solid var(--text-color);
+input, textarea {
+  background-color: var(--input-bg);
   color: var(--text-color);
+  border: 1px solid var(--input-border);
+  border-radius: 0.4rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--placeholder-color);
+}
+
+input:focus, textarea:focus {
+  border-color: var(--btn-color);
 }
 
 form {
-  border: 1px solid var(--text-color);
-}
-
-textarea {
-  border: 1px solid var(--text-color);
-  color: var(--text-color);
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background-color: var(--box-bg);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 button {
-  color: var(--text-color);
+  color: #ffffff;
   background-color: var(--btn-color);
-  border: 1px solid var(--text-color);
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--btn-hover-color);
 }
 
 .box-bg {
   background-color: var(--box-bg);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .box-border {
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+}
+
+header, footer {
+  padding: 1rem;
+  background-color: var(--box-bg);
+  color: var(--text-color);
+  border-top: 1px solid var(--input-border);
+}
+
+a {
+  color: var(--btn-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--btn-hover-color);
 }

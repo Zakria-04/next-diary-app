@@ -14,9 +14,19 @@
 }
 
 .binHidden {
-  visibility: hidden;
+  display: none;
 }
 
 .binVisible {
   visibility: visible;
+  cursor: pointer;
+}
+
+.binBtn {
+  background: none;
+  border: none;
+}
+
+.binBtn:disabled {
+  cursor: not-allowed;
 }

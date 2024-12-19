@@ -1,37 +1,80 @@
 .container {
   padding: 1rem;
   margin-top: 1.5rem;
+  background-color: var(--box-bg);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .listContainer {
   margin-bottom: 1.5rem;
   padding: 1rem;
   border-radius: 0.5rem;
+  background-color: var(--bg-color);
+  border: 1px solid var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.listContainer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .listContainer p {
   flex-wrap: wrap;
   word-wrap: break-word;
+  font-size: 1rem;
+  color: var(--text-color);
+  margin: 0;
+  line-height: 1.6;
 }
 
 .modifyBtn {
   text-align: right;
+  margin-top: 0.5rem;
 }
 
 .modifyBtn button {
   padding: 0.5rem;
   border-radius: 0.3rem;
   text-align: center;
+  background-color: var(--btn-color);
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modifyBtn button:hover {
+  background-color: var(--text-color);
+  color: var(--bg-color);
 }
 
 .listHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid var(--text-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .listHeader input[type="checkbox"] {
   width: 1.5rem;
   height: 1.5rem;
-  border-radius: 1rem;
+  border-radius: 50%;
+  border: 2px solid var(--text-color);
+  background-color: var(--bg-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.listHeader input[type="checkbox"]:checked {
+  background-color: var(--btn-color);
+  border-color: var(--btn-color);
 }
