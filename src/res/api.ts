@@ -3,7 +3,9 @@ import axios from "axios";
 import { AxiosError } from "axios";
 import { DeleteDiaryType, GetUserListType, UserInfo } from "./type";
 
-const MainDomain = "http://localhost:8081";
+// const MainDomain = "http://localhost:8081";
+const MainDomain =
+  "https://diary-server-3hs4t541a-zakria-04s-projects.vercel.app";
 
 const isLive = () => {
   const route = "/live";
