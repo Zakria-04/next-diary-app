@@ -11,7 +11,10 @@ interface LoginRegisterProps {
 
 const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
   const { setUser, auth, setAuth, user } = useStore();
-  const [inputsError, setInputsError] = useState<any>({});
+  const [inputsError, setInputsError] = useState<{
+    type?: string;
+    error?: string;
+  }>({});
 
   useEffect(() => {
     if (user === null) {
@@ -45,8 +48,11 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
         setUser(response.user);
         setAuth(true);
       }
-    } catch (error: any) {
-      const errorMessage = JSON.parse(error.message);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? JSON.parse(error.message)
+          : "An unknown error occurred";
       setInputsError(errorMessage);
     }
   };

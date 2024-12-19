@@ -1,3 +1,4 @@
+import { DiaryListTypes } from "@/store/types";
 import axios from "axios";
 
 const MainDomain = "http://localhost:8081";
@@ -17,30 +18,30 @@ const createUserToDB = (body: UserInfo) => {
   return appFetch(route, "POST", body);
 };
 
-const createDiaryToDB = (body: any) => {
+const createDiaryToDB = (body: DiaryListTypes) => {
   const route = "/create_diary";
   return appFetch(route, "POST", body);
 };
 
-const updateDiaryFromDB = (body: any) => {
+const updateDiaryFromDB = (body: DiaryListTypes) => {
   const route = "/update_diary";
   return appFetch(route, "PATCH", body);
 };
 
-const deleteDiaryFromDB = (body: any) => {
+const deleteDiaryFromDB = (body: DeleteDiaryType) => {
   const route = "/delete_diary";
   return appFetch(route, "DELETE", body);
 };
 
-const getUserDiaryFromDB = (body: any) => {
+const getUserDiaryFromDB = (body: GetUserListType) => {
   const route = "/get_diary";
-  return appFetch(route, "GET");
+  return appFetch(route, "POST", body);
 };
 
 const appFetch = async (
   route: string,
   method: "GET" | "POST" | "PATCH" | "DELETE",
-  body?: UserInfo
+  body?: UserInfo | DiaryListTypes | DeleteDiaryType | GetUserListType
 ) => {
   try {
     const response = await axios({

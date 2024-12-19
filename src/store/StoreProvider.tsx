@@ -2,6 +2,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import StoreContext from "./StoreContext";
 import { DiaryListTypes, UserInfoType } from "./types";
+import { getUserDiaryFromDB } from "@/res/api";
 
 interface StoreProviderProps {
   children: ReactNode;
@@ -43,6 +44,21 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     setTheme(mode);
   };
 
+  // get user diary list
+  const getUserDiary = async () => {
+    try {
+      setError(null);
+      const response = await getUserDiaryFromDB({ authID: user?._id });
+      setDiary(response);
+    } catch (error: unknown) {
+      const errMessage =
+        error instanceof Error
+          ? JSON.parse(error.message)
+          : "An unknown error occurred";
+      setError(errMessage.error);
+    }
+  };
+
   const providerValue = {
     // State
     theme,
@@ -62,6 +78,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
 
     // Functions
     handleThemeChange,
+    getUserDiary,
   };
 
   return (
