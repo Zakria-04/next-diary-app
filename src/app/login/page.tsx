@@ -1,12 +1,10 @@
-import Header from "@/components/Header";
-import LoginRegister from "@/components/LoginRegister";
+import LoginPage from "@/components/LoginPage";
 import React from "react";
 
 const page = () => {
   return (
     <>
-      <Header />
-      <LoginRegister status="login" />
+      <LoginPage />
     </>
   );
 };

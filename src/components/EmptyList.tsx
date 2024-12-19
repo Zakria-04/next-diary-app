@@ -8,7 +8,7 @@ const EmptyList = () => {
   return (
     <div className={`${styles.container} text-color`}>
       <div className={styles.emptyText}>
-        <h1>You don't have any diaries yet!</h1>
+        <h1>You don&apos;t have any diaries yet!</h1>
         <p className="text-color">
           Start capturing your thoughts, dreams, and memories today. Click the
           button

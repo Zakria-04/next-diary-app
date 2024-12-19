@@ -1,5 +1,7 @@
 import { DiaryListTypes } from "@/store/types";
 import axios from "axios";
+import { AxiosError } from "axios";
+import { DeleteDiaryType, GetUserListType, UserInfo } from "./type";
 
 const MainDomain = "http://localhost:8081";
 
@@ -51,10 +53,16 @@ const appFetch = async (
     });
 
     return await response.data;
-  } catch (error: any) {
-    const serverError = error.response?.data || "An unexpected error occurred";
-    console.error(`Error on fetching the route, ${route}: ${serverError}`);
-    throw new Error(JSON.stringify(serverError));
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      const serverError =
+        error.response?.data || "An unexpected error occurred";
+      console.error(`Error on fetching the route, ${route}: ${serverError}`);
+      throw new Error(JSON.stringify(serverError));
+    } else {
+      console.error("An unknown error occurred", error);
+      throw new Error("An unknown error occurred");
+    }
   }
 };
 

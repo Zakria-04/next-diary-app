@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import styles from "./styles/LoginRegister.module.css";
 import { createUserToDB, loginUserFromDB } from "@/res/api";
 import useStore from "@/utils/store_provider";
@@ -7,9 +7,20 @@ import { redirect } from "next/navigation";
 
 interface LoginRegisterProps {
   status: "login" | "register";
+  needTestAccount?: boolean;
+  setNeedTestAccount?: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
+type InputForm = {
+  userName: string;
+  userPass: string;
+  email: string;
+};
+
+const LoginRegister: React.FC<LoginRegisterProps> = ({
+  status,
+  needTestAccount,
+}) => {
   const { setUser, auth, setAuth, user } = useStore();
   const [inputsError, setInputsError] = useState<{
     type?: string;
@@ -26,17 +37,33 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
     }
   }, [auth, user]);
 
-  const inputsRef = useRef({
+  const [inputs, setInputs] = useState<InputForm>({
     userName: "",
     email: "",
     userPass: "",
   });
 
+  useEffect(() => {
+    if (needTestAccount) {
+      setInputs({
+        userName: "testing_account",
+        userPass: "test123456789",
+        email: "",
+      });
+    } else {
+      setInputs({
+        userName: "",
+        userPass: "",
+        email: "",
+      });
+    }
+  }, [needTestAccount]);
+
   const handleInputsChange = (key: string, value: string) => {
-    inputsRef.current = {
-      ...inputsRef.current,
+    setInputs((prev) => ({
+      ...prev,
       [key]: value,
-    };
+    }));
   };
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,7 +71,7 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
 
     try {
       const apiFunction = status === "login" ? loginUserFromDB : createUserToDB;
-      const response = await apiFunction(inputsRef.current);
+      const response = await apiFunction(inputs);
       if (response) {
         console.log("user logged in sucsusfully!");
         setUser(response.user);
@@ -77,6 +104,7 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
       <input
         className={`${notUserError}`}
         type="text"
+        value={inputs.userName}
         onChange={(e) => handleInputsChange("userName", e.target.value)}
         onInput={() => setInputsError({})}
         required
@@ -94,6 +122,7 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
           <label htmlFor="email">Email</label>
           <input
             type="text"
+            value={inputs.email}
             onChange={(e) => handleInputsChange("email", e.target.value)}
             onInput={() => setInputsError({})}
           />
@@ -105,6 +134,7 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({ status }) => {
       <input
         className={`${wrongPass || notUserError}`}
         type="password"
+        value={inputs.userPass}
         onChange={(e) => handleInputsChange("userPass", e.target.value)}
         onInput={() => setInputsError({})}
         required

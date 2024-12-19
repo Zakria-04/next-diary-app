@@ -1,11 +1,21 @@
 "use client";
-import React from "react";
+import React, { SetStateAction } from "react";
 import useStore from "@/utils/store_provider";
 import styles from "./styles/Header.module.css";
 import Image from "next/image";
 import logout from "../assets/images/logout.png";
 
-const Header = () => {
+interface HeaderProps {
+  needTestAccount?: boolean;
+  setNeedTestAccount?: React.Dispatch<SetStateAction<boolean>>;
+  status?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({
+  needTestAccount,
+  setNeedTestAccount,
+  status,
+}) => {
   const { theme, handleThemeChange, logoutUser, auth } = useStore();
 
   return (
@@ -26,6 +36,11 @@ const Header = () => {
           height={45}
           onClick={logoutUser}
         />
+      )}
+      {!auth && status === "login" && setNeedTestAccount && (
+        <button onClick={() => setNeedTestAccount(!needTestAccount)}>
+          Sign in with a test account
+        </button>
       )}
     </div>
   );

@@ -2,7 +2,6 @@ import { DiaryListTypes } from "@/store/types";
 import React, { SetStateAction, useState } from "react";
 import styles from "./styles/DiaryList.module.css";
 import NewDiaryModal from "./modals/NewDiaryModal";
-import useStore from "@/utils/store_provider";
 import EmptyList from "./EmptyList";
 
 interface DiaryListProps {
@@ -13,10 +12,8 @@ interface DiaryListProps {
 
 const DiaryList: React.FC<DiaryListProps> = ({
   diary,
-  listSimulator,
   setListSimulator,
 }) => {
-  const { setDiary } = useStore();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<null | DiaryListTypes>(null);
 

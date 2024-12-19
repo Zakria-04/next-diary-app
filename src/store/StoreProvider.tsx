@@ -2,40 +2,56 @@
 import { ReactNode, useEffect, useState } from "react";
 import StoreContext from "./StoreContext";
 import { DiaryListTypes, UserInfoType } from "./types";
-import { getUserDiaryFromDB, loginUserFromDB } from "@/res/api";
+import { getUserDiaryFromDB } from "@/res/api";
 
 interface StoreProviderProps {
   children: ReactNode;
 }
 
 const StoreProvider = ({ children }: StoreProviderProps) => {
-  const [theme, setTheme] = useState<"light" | "dark">(
-    () => (localStorage.getItem("theme") as "light" | "dark") || "dark"
-  );
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [diary, setDiary] = useState<DiaryListTypes[]>([]);
   const [isLive, setIsLive] = useState<boolean>(false);
-  const [user, setUser] = useState<UserInfoType | null>(() =>
-    JSON.parse(localStorage.getItem("user") || "null")
-  );
+  const [user, setUser] = useState<UserInfoType | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [auth, setAuth] = useState(
-    () => localStorage.getItem("auth") === "true"
-  );
+  const [auth, setAuth] = useState<boolean>(false);
 
-  // sync theme with local storage
   useEffect(() => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    const savedUser = localStorage.getItem("user");
+    const savedAuth = localStorage.getItem("auth");
+
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+    if (savedAuth) {
+      setAuth(savedAuth === "true");
+    }
+  }, []);
+
+  // Sync theme with local storage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+    }
   }, [theme]);
 
-  // sync auth with local storage
+  // Sync auth with local storage
   useEffect(() => {
-    localStorage.setItem("auth", String(auth));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("auth", String(auth));
+    }
   }, [auth]);
 
-  // sync user with local storage
+  // Sync user with local storage
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
   }, [user]);
 
   // Toggle Theme
@@ -44,22 +60,24 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     setTheme(mode);
   };
 
-  // get user diary list
+  // Get user diary list
   const getUserDiary = async () => {
-    try {
-      setError(null);
-      const response = await getUserDiaryFromDB({ authID: user?._id });
-      setDiary(response);
-    } catch (error: unknown) {
-      const errMessage =
-        error instanceof Error
-          ? JSON.parse(error.message)
-          : "An unknown error occurred";
-      setError(errMessage.error);
+    if (user?._id) {
+      try {
+        setError(null);
+        const response = await getUserDiaryFromDB({ authID: user._id });
+        setDiary(response);
+      } catch (error: unknown) {
+        const errMessage =
+          error instanceof Error
+            ? JSON.parse(error.message)
+            : "An unknown error occurred";
+        setError(errMessage.error);
+      }
     }
   };
 
-  // logout user
+  // Logout user
   const logoutUser = () => {
     setAuth(false);
     setDiary([]);
@@ -75,7 +93,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     error,
     auth,
 
-    // Setter Function
+    // Setter Functions
     setTheme,
     setDiary,
     setIsLive,

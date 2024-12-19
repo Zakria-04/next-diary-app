@@ -5,11 +5,10 @@ import DiaryBody from "./DiaryBody";
 import useStore from "@/utils/store_provider";
 import ErrorMessageModal from "./modals/ErrorMessageModal";
 import { redirect } from "next/navigation";
-import { getUserDiaryFromDB } from "@/res/api";
 
 const DiaryPage = () => {
   const [listSimulator, setListSimulator] = useState<string[]>([]);
-  const { error, auth, user, getUserDiary, diary } = useStore();
+  const { error, auth, user, getUserDiary } = useStore();
 
   // check if user is logged in otherwise back to login page
   useEffect(() => {

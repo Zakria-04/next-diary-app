@@ -2,17 +2,19 @@
 import { isLive } from "@/res/api";
 import { redirect } from "next/navigation";
 import React, { useEffect } from "react";
-import styles from "./styles/Splash.module.css"
+import styles from "./styles/Splash.module.css";
 
 const Splash = () => {
-  const isServerLive = async () => {
-    const response = await isLive();
-    response.live && redirect("/login");
-  };
-
   useEffect(() => {
-    isServerLive();
-  }, [isServerLive]);
+    const checkServerLive = async () => {
+      const response = await isLive();
+      if (response.live) {
+        redirect("/login");
+      }
+    };
+
+    checkServerLive();
+  }, []);
 
   return (
     <div className={styles.container}>

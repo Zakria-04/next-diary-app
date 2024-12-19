@@ -1,9 +1,8 @@
-import React, { SetStateAction, useRef, useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import styles from "./styles/NewDiaryModal.module.css";
 import { DiaryListTypes } from "@/store/types";
 import useStore from "@/utils/store_provider";
 import { createDiaryToDB } from "@/res/api";
-import ErrorMessageModal from "./ErrorMessageModal";
 
 interface NewDiaryModalProps {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -48,8 +47,7 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
           ? JSON.parse(error.message)
           : "An unknown error occurred";
       setError(errMessage.errorMsg);
-      console.log("err from errMsg",error);
-      
+      console.log("err from errMsg", error);
     }
   };
 

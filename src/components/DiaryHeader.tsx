@@ -1,5 +1,5 @@
 "use client";
-import React, { SetStateAction, useEffect, useMemo, useState } from "react";
+import React, { SetStateAction, useMemo, useState } from "react";
 import NewDiaryModal from "./modals/NewDiaryModal";
 import styles from "./styles/DiaryHeader.module.css";
 import Image from "next/image";
@@ -60,7 +60,7 @@ const DiaryHeader: React.FC<DiaryHeaderProps> = ({
         />
       </button>
       <button className={styles.newDiaryBtn} onClick={() => setIsOpen(!isOpen)}>
-        Share New Story
+        Share a New Story
       </button>
       {isOpen && <NewDiaryModal setIsOpen={setIsOpen} direction="create" />}
     </div>

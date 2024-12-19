@@ -6,7 +6,7 @@ const page = () => {
   return (
     <>
       <Header />
-      <LoginRegister status="register" />
+      <LoginRegister status="register"  />
     </>
   );
 };
