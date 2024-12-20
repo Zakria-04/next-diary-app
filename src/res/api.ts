@@ -4,8 +4,7 @@ import { AxiosError } from "axios";
 import { DeleteDiaryType, GetUserListType, UserInfo } from "./type";
 
 // const MainDomain = "http://localhost:8081";
-const MainDomain =
-  "https://diary-server-3hs4t541a-zakria-04s-projects.vercel.app";
+const MainDomain = "https://diary-server-gilt.vercel.app";
 
 const isLive = () => {
   const route = "/live";
@@ -45,7 +44,7 @@ const getUserDiaryFromDB = (body: GetUserListType) => {
 const appFetch = async (
   route: string,
   method: "GET" | "POST" | "PATCH" | "DELETE",
-  body?: UserInfo | DiaryListTypes | DeleteDiaryType | GetUserListType
+  body?: Record<string, unknown>
 ) => {
   try {
     const response = await axios({

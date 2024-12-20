@@ -15,6 +15,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   const [user, setUser] = useState<UserInfoType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [auth, setAuth] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
@@ -92,6 +93,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     user,
     error,
     auth,
+    isLoading,
 
     // Setter Functions
     setTheme,
@@ -100,6 +102,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
     setUser,
     setError,
     setAuth,
+    setIsLoading,
 
     // Functions
     handleThemeChange,

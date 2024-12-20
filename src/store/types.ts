@@ -22,6 +22,7 @@ export interface StoreContextType {
   user: UserInfoType | null;
   error: string | null;
   auth: boolean;
+  isLoading: boolean;
 
   // Setter function
   setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
@@ -30,6 +31,7 @@ export interface StoreContextType {
   setUser: React.Dispatch<SetStateAction<UserInfoType | null>>;
   setError: React.Dispatch<SetStateAction<string | null>>;
   setAuth: React.Dispatch<SetStateAction<boolean>>;
+  setIsLoading: React.Dispatch<SetStateAction<boolean>>;
 
   // Functions
   handleThemeChange: () => void;

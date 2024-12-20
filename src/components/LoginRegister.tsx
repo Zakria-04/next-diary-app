@@ -4,6 +4,7 @@ import styles from "./styles/LoginRegister.module.css";
 import { createUserToDB, loginUserFromDB } from "@/res/api";
 import useStore from "@/utils/store_provider";
 import { redirect } from "next/navigation";
+import Loading from "./Loading";
 
 interface LoginRegisterProps {
   status: "login" | "register";
@@ -21,7 +22,7 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({
   status,
   needTestAccount,
 }) => {
-  const { setUser, auth, setAuth, user } = useStore();
+  const { setUser, auth, setAuth, user, setIsLoading, isLoading } = useStore();
   const [inputsError, setInputsError] = useState<{
     type?: string;
     error?: string;
@@ -70,6 +71,7 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const apiFunction = status === "login" ? loginUserFromDB : createUserToDB;
       const response = await apiFunction(inputs);
       if (response) {
@@ -78,12 +80,14 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({
         setAuth(true);
       }
     } catch (error: unknown) {
+      setIsLoading(false);
       const errorMessage =
         error instanceof Error
           ? JSON.parse(error.message)
           : "An unknown error occurred";
       setInputsError(errorMessage);
     }
+    setIsLoading(false);
   };
 
   // render texts based on status => "login or register"
@@ -99,63 +103,66 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({
   const wrongPass = inputsError.type === "password" ? styles.inputError : "";
 
   return (
-    <form id={styles.formContainer} onSubmit={handleFormSubmit}>
-      <label htmlFor="userName">{userNameText}</label>
-      <input
-        className={`${notUserError}`}
-        type="text"
-        value={inputs.userName}
-        onChange={(e) => handleInputsChange("userName", e.target.value)}
-        onInput={() => setInputsError({})}
-        required
-      />
-      {status === "login" ? (
-        <p className={styles.errorText}>
-          {inputsError.type === "notUser" && inputsError.error}
-        </p>
-      ) : (
-        <p></p>
-      )}
-
-      {status === "register" && (
-        <>
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            value={inputs.email}
-            onChange={(e) => handleInputsChange("email", e.target.value)}
-            onInput={() => setInputsError({})}
-          />
+    <>
+      {isLoading && <Loading />}
+      <form id={styles.formContainer} onSubmit={handleFormSubmit}>
+        <label htmlFor="userName">{userNameText}</label>
+        <input
+          className={`${notUserError}`}
+          type="text"
+          value={inputs.userName}
+          onChange={(e) => handleInputsChange("userName", e.target.value)}
+          onInput={() => setInputsError({})}
+          required
+        />
+        {status === "login" ? (
+          <p className={styles.errorText}>
+            {inputsError.type === "notUser" && inputsError.error}
+          </p>
+        ) : (
           <p></p>
-        </>
-      )}
+        )}
 
-      <label htmlFor="password">Password</label>
-      <input
-        className={`${wrongPass || notUserError}`}
-        type="password"
-        value={inputs.userPass}
-        onChange={(e) => handleInputsChange("userPass", e.target.value)}
-        onInput={() => setInputsError({})}
-        required
-      />
-      {status === "login" ? (
-        <p className={styles.errorText}>
-          {inputsError.type === "password" || inputsError.type === "notUser"
-            ? inputsError.error
-            : ""}
+        {status === "register" && (
+          <>
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              value={inputs.email}
+              onChange={(e) => handleInputsChange("email", e.target.value)}
+              onInput={() => setInputsError({})}
+            />
+            <p></p>
+          </>
+        )}
+
+        <label htmlFor="password">Password</label>
+        <input
+          className={`${wrongPass || notUserError}`}
+          type="password"
+          value={inputs.userPass}
+          onChange={(e) => handleInputsChange("userPass", e.target.value)}
+          onInput={() => setInputsError({})}
+          required
+        />
+        {status === "login" ? (
+          <p className={styles.errorText}>
+            {inputsError.type === "password" || inputsError.type === "notUser"
+              ? inputsError.error
+              : ""}
+          </p>
+        ) : (
+          <p className={styles.errorText}>{inputsError.errorMsg}</p>
+        )}
+        <button>{buttonText}</button>
+        <p id={styles.linkText}>
+          {toggleText}{" "}
+          <a href={toggleLinkHref} onClick={() => setInputsError({})}>
+            {toggleLinkText}
+          </a>
         </p>
-      ) : (
-        <p className={styles.errorText}>{inputsError.errorMsg}</p>
-      )}
-      <button>{buttonText}</button>
-      <p id={styles.linkText}>
-        {toggleText}{" "}
-        <a href={toggleLinkHref} onClick={() => setInputsError({})}>
-          {toggleLinkText}
-        </a>
-      </p>
-    </form>
+      </form>
+    </>
   );
 };
 

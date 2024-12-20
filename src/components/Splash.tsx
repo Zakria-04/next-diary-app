@@ -1,26 +1,16 @@
-"use client";
+// Remove 'use client'
 import { isLive } from "@/res/api";
 import { redirect } from "next/navigation";
-import React, { useEffect } from "react";
-import styles from "./styles/Splash.module.css";
+import Loading from "./Loading";
 
-const Splash = () => {
-  useEffect(() => {
-    const checkServerLive = async () => {
-      const response = await isLive();
-      if (response.live) {
-        redirect("/login");
-      }
-    };
+const Splash = async () => {
+  const response = await isLive();
 
-    checkServerLive();
-  }, []);
+  if (response.live) {
+    redirect("/login");
+  }
 
-  return (
-    <div className={styles.container}>
-      <h1>Loading...</h1>
-    </div>
-  );
+  return <Loading />;
 };
 
 export default Splash;
