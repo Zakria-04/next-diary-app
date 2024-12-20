@@ -6,8 +6,7 @@ import close from "../../assets/images/close.png";
 
 const ErrorMessageModal = () => {
   const { error, setError } = useStore();
-  console.log("err is",error);
-  
+
   return (
     <div className={styles.container}>
       <div id={styles.modalHeader}>

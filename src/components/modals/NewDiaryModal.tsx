@@ -2,12 +2,12 @@ import React, { SetStateAction, useState } from "react";
 import styles from "./styles/NewDiaryModal.module.css";
 import { DiaryListTypes } from "@/store/types";
 import useStore from "@/utils/store_provider";
-import { createDiaryToDB } from "@/res/api";
+import { createDiaryToDB, updateDiaryFromDB } from "@/res/api";
 
 interface NewDiaryModalProps {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
   direction: "modify" | "create";
-  selectedItem?: DiaryListTypes | null;
+  selectedItem?: DiaryListTypes | any;
 }
 
 const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
@@ -47,11 +47,12 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
           ? JSON.parse(error.message)
           : "An unknown error occurred";
       setError(errMessage.errorMsg);
+      console.log("this error should appear");
       console.log("err from errMsg", error);
     }
   };
 
-  const handleUpdatedInputs = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdatedInputs = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const list = diary.find((doc) => doc._id === selectedItem?._id);
@@ -59,6 +60,18 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
     if (list) {
       list.title = inputs.title || list.title;
       list.context = inputs.context || list.context;
+    }
+
+    try {
+      const response = await updateDiaryFromDB(selectedItem);
+      console.log("updated?", response);
+    } catch (error: unknown) {
+      const errMessage =
+        error instanceof Error
+          ? JSON.parse(error.message)
+          : "An unknown error occurred";
+      setError(errMessage.error);
+      console.log("err from errMsg", error);
     }
 
     setIsOpen(false);

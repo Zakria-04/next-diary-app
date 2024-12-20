@@ -3,8 +3,8 @@ import axios from "axios";
 import { AxiosError } from "axios";
 import { DeleteDiaryType, GetUserListType, UserInfo } from "./type";
 
-// const MainDomain = "http://localhost:8081";
-const MainDomain = "https://diary-server-gilt.vercel.app";
+const MainDomain = "http://localhost:8081";
+// const MainDomain = "https://diary-server-gilt.vercel.app";
 
 const isLive = () => {
   const route = "/live";
@@ -27,6 +27,8 @@ const createDiaryToDB = (body: DiaryListTypes) => {
 };
 
 const updateDiaryFromDB = (body: DiaryListTypes) => {
+  console.log(body);
+  
   const route = "/update_diary";
   return appFetch(route, "PATCH", body);
 };

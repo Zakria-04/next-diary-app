@@ -3,6 +3,7 @@ import React, { SetStateAction, useState } from "react";
 import styles from "./styles/DiaryList.module.css";
 import NewDiaryModal from "./modals/NewDiaryModal";
 import EmptyList from "./EmptyList";
+import { updateDiaryFromDB } from "@/res/api";
 
 interface DiaryListProps {
   diary: DiaryListTypes[];
@@ -10,18 +11,15 @@ interface DiaryListProps {
   setListSimulator: React.Dispatch<SetStateAction<string[]>>;
 }
 
-const DiaryList: React.FC<DiaryListProps> = ({
-  diary,
-  setListSimulator,
-}) => {
+const DiaryList: React.FC<DiaryListProps> = ({ diary, setListSimulator }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<null | DiaryListTypes>(null);
+  const [selectedItem, setSelectedItem] = useState<DiaryListTypes | undefined>(undefined);
 
   if (diary.length === 0) {
     return <EmptyList />;
   }
 
-  const handleModifyClick = (item: DiaryListTypes) => {
+  const handleModifyClick = async (item: DiaryListTypes) => {
     setIsOpen(!isOpen);
     setSelectedItem(item);
   };
@@ -49,11 +47,15 @@ const DiaryList: React.FC<DiaryListProps> = ({
             <input type="checkbox" onClick={() => getSelectedLists(list._id)} />
           </div>
 
-          <p>title : {list.title}</p>
-          <label>context :</label>
+          <div className={styles.titleHeader}>
+            <p className={styles.listTitle}>Title : </p>
+            <p className={styles.title}>{list.title}</p>
+          </div>
+
+          <label className={styles.listTitle}>Context :</label>
           <p>{list.context}</p>
           <div className={styles.modifyBtn}>
-            <button onClick={() => handleModifyClick(list)}>modify</button>
+            <button onClick={() => handleModifyClick(list)}>Modify</button>
           </div>
         </div>
       ))}

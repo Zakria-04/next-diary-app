@@ -25,13 +25,13 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.listContainer p {
+.listContainer .title {
   flex-wrap: wrap;
   word-wrap: break-word;
   font-size: 1rem;
   color: var(--text-color);
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .modifyBtn {
@@ -79,8 +79,18 @@
   border-color: var(--btn-color);
 }
 
+.listTitle {
+  color: #4caf50;
+}
+
+.titleHeader {
+  display: flex;
+  align-items: center;
+  gap: 8;
+}
+
 @media (min-width: 1150px) {
   .container {
-    padding: 1.5rem  10rem;
+    padding: 1.5rem 10rem;
   }
 }
