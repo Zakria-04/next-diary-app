@@ -39,8 +39,8 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({
   }, [auth, user]);
 
   const [inputs, setInputs] = useState<InputForm>({
-    userName: "",
-    email: "",
+    userName: "".toLocaleLowerCase(),
+    email: "".toLocaleLowerCase(),
     userPass: "",
   });
 
@@ -53,17 +53,19 @@ const LoginRegister: React.FC<LoginRegisterProps> = ({
       });
     } else {
       setInputs({
-        userName: "",
+        userName: "".toLocaleLowerCase(),
         userPass: "",
-        email: "",
+        email: "".toLocaleLowerCase(),
       });
     }
   }, [needTestAccount]);
 
+  console.log(inputs);
+
   const handleInputsChange = (key: string, value: string) => {
     setInputs((prev) => ({
       ...prev,
-      [key]: value,
+      [key]: value.toLocaleLowerCase(),
     }));
   };
 
