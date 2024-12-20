@@ -7,7 +7,7 @@ const Loading = () => {
     <div className={styles.container}>
       <div className={styles.spinner}></div>
       <p className={styles.text}>
-        Hang tight! We're getting things ready for you...
+        Hang tight! We&apos;re getting things ready for you...
       </p>
     </div>
   );
