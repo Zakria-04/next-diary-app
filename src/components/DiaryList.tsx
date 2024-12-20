@@ -3,7 +3,6 @@ import React, { SetStateAction, useState } from "react";
 import styles from "./styles/DiaryList.module.css";
 import NewDiaryModal from "./modals/NewDiaryModal";
 import EmptyList from "./EmptyList";
-import { updateDiaryFromDB } from "@/res/api";
 
 interface DiaryListProps {
   diary: DiaryListTypes[];

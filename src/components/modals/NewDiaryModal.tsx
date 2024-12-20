@@ -7,7 +7,7 @@ import { createDiaryToDB, updateDiaryFromDB } from "@/res/api";
 interface NewDiaryModalProps {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
   direction: "modify" | "create";
-  selectedItem?: DiaryListTypes | any;
+  selectedItem?: DiaryListTypes;
 }
 
 const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
@@ -54,6 +54,11 @@ const NewDiaryModal: React.FC<NewDiaryModalProps> = ({
 
   const handleUpdatedInputs = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!selectedItem) {
+      setError("Selected item is missing.");
+      return;
+    }
 
     const list = diary.find((doc) => doc._id === selectedItem?._id);
 
